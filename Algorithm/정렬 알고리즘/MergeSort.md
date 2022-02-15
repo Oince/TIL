@@ -8,7 +8,7 @@
 길이가 1보다 크다면 1이 될 때 까지 다시 쪼갠다.
 3. 쪼개진 배열을 합치면서 정렬한다.
 
-<img src="https://t1.daumcdn.net/cfile/tistory/214EFE385452034624">
+<img src="https://gmlwjd9405.github.io/images/algorithm-merge-sort/merge-sort-concepts.png">
 
 코드(java)  
 ```java
@@ -79,6 +79,9 @@ void merge(int low, int mid, int high) {
   
 공간 복잡도 - O(n)  
 merge 함수에서 사용하는 지역배열의 최대 크기는 input배열의 크기이다.
+
+출처  
+https://gmlwjd9405.github.io/2018/05/08/algorithm-merge-sort.html
 
     
     
