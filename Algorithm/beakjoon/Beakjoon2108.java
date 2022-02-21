@@ -23,7 +23,7 @@ public class Beakjoon2108 {
         for (i = 0; i < arr.length; i++) {
             mean += arr[i];
         }
-        System.out.printf("%.0f\n", (float) mean / n);
+        System.out.println(Math.round((double)mean / n));
 
         //빈도 수 배열 입력
         int[] count = new int[8001];
