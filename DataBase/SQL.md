@@ -81,17 +81,6 @@ Delete from professor where deptName='CS';
 ```
 //professor 테이블의 레코드 중에 salary가 3000이상이면 salary 값을 수정
 Update professor set salary = salary * 1.03 where salary > 3000;
-
-
 ```
 
-
-
-
-
-
-
-
-
-
-
+출처 데이터베이스 I 이론 및 실제, 이상호
