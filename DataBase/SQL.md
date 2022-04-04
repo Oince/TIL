@@ -3,7 +3,7 @@
 structured query language의 약자  
 관계형 데이터베이스 모델을 위한 데이터베이스 언어  
 대소문자 구분이 없고, 문장의 끝에 세미콜론 사용  
-DDL, DML, DCL을 모두 포함  
+DDL, DML을 포함  
 
 ## DDL SQL
 데이터베이스 스키마를 정의하는 언어.  
