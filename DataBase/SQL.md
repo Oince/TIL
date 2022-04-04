@@ -68,16 +68,6 @@ Alter table professor drop salary;
 데이터베이스 인스턴스를 조작하는 언어.  
 인스턴스 생성, 조회, 삭제, 변경 등의 기능을 지원함.  
 
-### Insert
-레코드를 입력하는 연산
-```
-//professor 테이블에 레코드 입력
-Insert into professor values ('41', 'Kim', 'CS', 3000);
-
-//특정 컬럼을 선택에서 입력 가능, 비어있는 컬럼은 자동으로 null로 채워짐
-Insert into professor (pIP, name) values ('42', 'Park')
-```
-
 ### Select
 Select 문장은 6개의 절로 나뉨  
 1. Select  
@@ -116,9 +106,7 @@ order by name;
 4. having 절 조건을 이용하여 참인 서브그룹 선택
 5. order by 절 조건을 적용하여 결과 테이블로 내보냄
 
-
 #### 추가적인 연산
-
 조인 연산
 ```
 //조인 연산, where 절에 조인 조건 적용
@@ -161,11 +149,67 @@ from cource
 where title like '100\%' escape '\';
 ```
 
-집합 연산
+집합 연산  
+집합 연산은 다른 select문과 다르게 중복을 허용하지 않음.  
+중복 허용시 all 키워드 사용
+|연산 종류|키워드|
+|-|-|
+|합집합|union|
+|교집합|intersect|
+|차집합|except|
+```
+//합집합 연산
+(Select cID from teaches
+where semester = 'Fall' and year = 2009)
+union 
+(Select cID from teaches
+where semester = 'Fall' and year = 2010)
 
+//all을 붙이면 중복 허용
+(Select cID from teaches
+where semester = 'Fall' and year = 2009)
+union all
+(Select cID from teaches
+where semester = 'Fall' and year = 2010)
+```
 
+#### null value
+연산시 null이 있으면 특별한 처리가 필요함.  
+입력 값이 null일 때  
+  
+산술 연산식의 결과는 null  
+ex) 5 + null = null  
+  
+비교 연산식의 결과는 unknown  
+ex) 5 > null = unknown  
+  
+unknown이 들어간 논리 연산의 결과는  
+true and unknown = true  
+false or unknown = false  
+이외의 나머지는 전부 unknown임.  
 
-   
+where절은 조건이 true인 것만 결과에 포함(false, unknown 제외)  
+
+null인 값을 찾을 때는 is null 사용
+
+```
+Select ....
+where salary is null;
+
+//not null 도 가능
+Select ....
+where salary is not null; 
+```
+
+### Insert
+레코드를 입력하는 연산
+```
+//professor 테이블에 레코드 입력
+Insert into professor values ('41', 'Kim', 'CS', 3000);
+
+//특정 컬럼을 선택에서 입력 가능, 비어있는 컬럼은 자동으로 null로 채워짐
+Insert into professor (pIP, name) values ('42', 'Park')
+```
 
 ### Delete
 레코드를 삭제하는 연산
@@ -184,4 +228,6 @@ Delete from professor where deptName='CS';
 Update professor set salary = salary * 1.03 where salary > 3000;
 ```
 
-출처 데이터베이스 I 이론 및 실제, 이상호
+출처  
+데이터베이스 I 이론 및 실제, 이상호  
+데이터베이스 시스템, Abraham silberschatz 외
