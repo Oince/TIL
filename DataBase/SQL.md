@@ -11,11 +11,24 @@ DDL, DML, DCL을 모두 포함
 
 ### SQL domain type
 데이터 타입  
-1. char(n) : 길이가 n인 문자열
-2. varchar(n) : 길이가 1 ~ n인 문자열
+1. char(n) : 길이가 n인 문자열  
+   길이가 n 이하일 경우 나머지를 공백으로 채움  
+2. varchar(n) : 길이가 최대 n인 문자열
 3. int : 정수
 4. numeric(p,d) : p는 숫자 개수, d는 소수점 개수  
-   ex) numeric(5,2) = 123.45
+   ex) numeric(5,2) = 123.45   
+
+이외에도 다양한 내장 타입이 있음  
+
+### 무결성 제약 종류
+1. primary key(속성1, 속성2, ...)  
+   괄호 안에 들어간 속성이 주 키임을 나타냄  
+   주 키 속성은 null을 가질 수 없으며 다른 튜플과 중복될 수 없음  
+2. foreign key(속성1, 속성2, ...) references s  
+   괄호안에 들어간 속성이 s가 가지고 있는 주 키 속성과 일치함을 나타냄  
+3. not null  
+   null값을 허용하지 않음  
+
 
 ### Create
 스키마를 만드는 문장
@@ -31,6 +44,7 @@ Create table professor (
     foreign key (deptName) references department
 );
 ```
+
 
 ### Drop
 스키마를 삭제하는 문장.  
@@ -65,6 +79,93 @@ Insert into professor (pIP, name) values ('42', 'Park')
 ```
 
 ### Select
+Select 문장은 6개의 절로 나뉨  
+1. Select  
+   관계 대수의 project 연산에 대응  
+   질의 결과에 나타날 속성을 나열함  
+   distinct 키워드 사용시 중복을 제거함 (기본값은 all)  
+2. from  
+   관계 대수의 카티시안 곱에 대응  
+   하나 혹은 여러개의 관계가 올 수 있음  
+   질의를 수행하기 위해 접근해야 하는 관계를 나열함
+3. where  
+   관계 대수의 select 연산에 대응  
+   찾아올 튜플의 조건을 명시함  
+   between 키워드 사용하여 값의 구간을 나타낼 수 있음
+4. group by
+5. having
+6. order by
+   결과 튜플을 정렬하는데 사용
+   기본값은 오름차순(asc), 내림차순으로 변경은 속성 뒤에 desc 키워드 추가  
+   
+
+```
+//professor 테이블에서 deptName이 CS이고 salary가 8000이상인 튜플의 name을 가져옴, name을 기준으로 오름차순으로 정렬
+Select name
+from professor
+where deptName = 'CS' and salary > 8000
+order by name;
+```
+
+#### 작동 순서 
+1. from 테이블에서 튜플을 하나씩 들고옴
+2. where 절 조건 적용  
+   2-1 참이면 group by절로 이동  
+   2-2 거짓이면 결과 테이블에서 제외  
+3. group by 속성을 이용하여 서브그룹으로 나눔
+4. having 절 조건을 이용하여 참인 서브그룹 선택
+5. order by 절 조건을 적용하여 결과 테이블로 내보냄
+
+
+#### 추가적인 연산
+
+조인 연산
+```
+//조인 연산, where 절에 조인 조건 적용
+Select name, cID
+from professor, teaches
+where professor.pID = teaches.pID;
+
+//자연 조인 (natural join 키워드 사용)
+Select name, cID
+from professor natural join teaches;
+
+//자연 조인시 속성명이 중복될 경우 where절을 이용하거나 using을 사용해 조인속성 지정
+Select name, title
+from (professor natural join teaches) join cource using(cID);
+```
+
+재명명 연산  
+as 키워드(생략 가능)으로 속성명 또는 테이블명 재명명 가능.  
+```
+//동일 테이블에서 비교 연산을 할 때 재명명 연산을 통해 가져옴
+Select distinct T.name
+from professor as T, professor as S
+where T.salary > S.salary and deptName
+```
+
+문자열 연산  
+작은 따옴표를 통해 문자열 표현  
+% 기호는 어떤 문자열과도 일치함  
+_ 기호는 어떤 문자와도 일치함  
+%나 _가 문자열에 포함될 경우 escape를 지정해서 탈출 문자를 지정
+```
+//name에 da가 포함된 튜플 리턴
+Select name
+from professor
+where name like '%da%';
+
+//title이 100%인 튜플 리턴
+Select cID
+from cource
+where title like '100\%' escape '\';
+```
+
+집합 연산
+
+
+
+   
 
 ### Delete
 레코드를 삭제하는 연산
