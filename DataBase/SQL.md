@@ -70,25 +70,25 @@ Alter table professor drop salary;
 
 ### Select
 Select 문장은 6개의 절로 나뉨  
-1. Select  
-   관계 대수의 project 연산에 대응  
-   질의 결과에 나타날 속성을 나열함  
-   distinct 키워드 사용시 중복을 제거함 (기본값은 all)  
-2. from  
-   관계 대수의 카티시안 곱에 대응  
-   하나 혹은 여러개의 관계가 올 수 있음  
-   질의를 수행하기 위해 접근해야 하는 관계를 나열함
-3. where  
-   관계 대수의 select 연산에 대응  
-   찾아올 튜플의 조건을 명시함  
-   between 키워드 사용하여 값의 구간을 나타낼 수 있음
-4. group by
-5. having
-6. order by
-   결과 튜플을 정렬하는데 사용
-   기본값은 오름차순(asc), 내림차순으로 변경은 속성 뒤에 desc 키워드 추가  
-   
+#### Select  
+관계 대수의 project 연산에 대응  
+질의 결과에 나타날 속성을 나열함  
+distinct 키워드 사용시 중복을 제거함 (기본값은 all)  
+#### from  
+관계 대수의 카티시안 곱에 대응  
+하나 혹은 여러개의 관계가 올 수 있음  
+질의를 수행하기 위해 접근해야 하는 관계를 나열함
+#### where  
+관계 대수의 select 연산에 대응  
+찾아올 튜플의 조건을 명시함  
+between 키워드 사용하여 값의 구간을 나타낼 수 있음
+#### group by
+#### having
+#### order by
+결과 튜플을 정렬하는데 사용
+기본값은 오름차순(asc), 내림차순으로 변경은 속성 뒤에 desc 키워드 추가  
 
+예시
 ```
 //professor 테이블에서 deptName이 CS이고 salary가 8000이상인 튜플의 name을 가져옴, name을 기준으로 오름차순으로 정렬
 Select name
@@ -173,34 +173,6 @@ union all
 where semester = 'Fall' and year = 2010)
 ```
 
-#### null value
-연산시 null이 있으면 특별한 처리가 필요함.  
-입력 값이 null일 때  
-  
-산술 연산식의 결과는 null  
-ex) 5 + null = null  
-  
-비교 연산식의 결과는 unknown  
-ex) 5 > null = unknown  
-  
-unknown이 들어간 논리 연산의 결과는  
-true and unknown = true  
-false or unknown = false  
-이외의 나머지는 전부 unknown임.  
-
-where절은 조건이 true인 것만 결과에 포함(false, unknown 제외)  
-
-null인 값을 찾을 때는 is null 사용
-
-```
-Select ....
-where salary is null;
-
-//not null 도 가능
-Select ....
-where salary is not null; 
-```
-
 ### Insert
 레코드를 입력하는 연산
 ```
@@ -226,6 +198,45 @@ Delete from professor where deptName='CS';
 ```
 //professor 테이블의 레코드 중에 salary가 3000이상이면 salary 값을 수정
 Update professor set salary = salary * 1.03 where salary > 3000;
+```
+
+조건이 여러개일 경우 case 문을 사용할 수 있음  
+then 이후에는 조건을 만족했을 때 반환되는 값이 나타남.  
+가장 먼저 조건을 만족하는 값을 반환
+```
+Update professor 
+set salary = case
+               when salary <= 3000 then salary*1.05
+               else salary*1.03
+               end;
+```
+
+## null value
+연산시 null이 있으면 특별한 처리가 필요함.  
+입력 값이 null일 때  
+  
+산술 연산식의 결과는 null  
+ex) 5 + null = null  
+  
+비교 연산식의 결과는 unknown  
+ex) 5 > null = unknown  
+  
+unknown이 들어간 논리 연산의 결과는  
+true and unknown = true  
+false or unknown = false  
+이외의 나머지는 전부 unknown임.  
+
+where절은 조건이 true인 것만 결과에 포함(false, unknown 제외)  
+
+null인 값을 찾을 때는 is null 사용
+
+```
+Select ....
+where salary is null;
+
+//not null 도 가능
+Select ....
+where salary is not null; 
 ```
 
 출처  
