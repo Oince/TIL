@@ -1,2 +1,9 @@
 # 멀티 프로세스(Multi process)
-## 단일 프로세스 서버의 한계
+
+## fork
+```
+#include <unistd.h>
+
+pid_t fork()
+```
+성공시 자식 프로세스의 pid 반환 (== 0)
