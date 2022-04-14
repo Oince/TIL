@@ -72,21 +72,30 @@ dynamic type binding은 타입을 미리 정해놓는 것이 아닌 실행중에
 전역 변수, static 변수 등이 할당되는 공간
 
 ### stack 영역
+stack의 형식으로(FILO) 저장  
 지역 변수가 할당되는 공간
 
 ### heap 영역
 사용자가 할당한 변수(malloc, new 등)이 할당되는 공간
 
-## lifetime
+## storage binding & lifetime
 ### static variable
 프로그램이 시작할 때 등록되고, 프로그램이 실행중일 때 계속 남아있다가 프로그램이 종료될 때 해제되는 변수.  
 전역 변수가 해당되며, data영역에 저장된다.  
 history sensitive한 특성이 필요할 경우 지역 변수를 static하게 할당할 수 있다. ex)c/c++ static 키워드  
 
 ### stack-dynamic variable
-해당하는 변수가
+해당 변수가 있는 부분이 실행될 때, stack영역에 저장되고 실행이 끝나면 삭제됨.  
+지역 변수가 해당됨.  
+
+### heap-dynamic variable
+프로그래머에 의해 실행시에 메모리에 할당되는 변수.  
+heap영역에 할당되며, 포인터나 참조 변수로만 해당 변수에 접근할 수 있음  
+메모리 할당을 해제하면 메모리에서 삭제됨.  
+c의 malloc, c++의 new 연산자 등이 heap-dynamic 변수를 만드는 역할을 하고 c의 free(), c++의 delete 등이 할당을 해제하는 역할을 함. 
 
 ## scope
+변수가 참조되거나 배정될 수 있는 범위를 scope라고 한다.
 
 
 
