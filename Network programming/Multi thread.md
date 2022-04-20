@@ -34,6 +34,15 @@ int pthread_join(pthread_t thread, void **retval);
 |thread|스레드 id|
 |retval|스레드 반환값 포인터|
 
+### pthread_detach()
+```c
+#include <pthread.h>
+
+int pthread_detach(pthread_t thread);
+```
+인자로 넘어간 스레드가 종료되는 시점에 자동으로 OS에게 자원을 반환하도록 설정하는 함수.  
+성공시 0, 실패시 오류코드 리턴  
+
 ## 세마포어
 세마포어는 공유 자원을 관리하기 위한 기술중 하나.  
 A스레드의 작업 결과가 공유 자원에 반영되지 않았을 때 B스레드가 공유 자원에 접근하여 생기는 문제를 해결하기 위한 기술.  
