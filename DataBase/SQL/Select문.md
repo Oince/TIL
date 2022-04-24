@@ -14,20 +14,11 @@ distinct 키워드 사용시 중복을 제거함 (기본값은 all)
 
 예시
 ```sql
-//professor 테이블에서 deptName이 CS이고 salary가 8000이상인 튜플의 name을 가져옴
+--professor 테이블에서 deptName이 CS이고 salary가 8000이상인 튜플의 name을 가져옴
 Select name
 from professor
 where deptName = 'CS' and salary > 8000
 ```
-
-## 작동 순서 
-1. from 테이블에서 튜플을 하나씩 들고옴
-2. where 절 조건 적용  
-   2-1 참이면 group by절로 이동  
-   2-2 거짓이면 결과 테이블에서 제외  
-3. group by 속성을 이용하여 서브그룹으로 나눔
-4. having 절 조건을 이용하여 참인 서브그룹 선택
-5. order by 절 조건을 적용하여 결과 테이블로 내보냄
 
 ## 추가적인 연산
 ### 조인 연산  
@@ -51,10 +42,12 @@ Select name, title
 from (professor natural join teaches) join cource using(cID);
 ```
 
+
+
 ### 재명명 연산  
 as 키워드(생략 가능)으로 속성명 또는 테이블명 재명명 가능.  
 ```sql
-//동일 테이블에서 비교 연산을 할 때 재명명 연산을 통해 가져옴
+--동일 테이블에서 비교 연산을 할 때 재명명 연산을 통해 가져옴
 Select distinct T.name
 from professor as T, professor as S
 where T.salary > S.salary and deptName
@@ -67,12 +60,12 @@ _ 기호는 어떤 문자와도 일치함
 like 연산자를 사용하여 문자열 패턴을 찾을 수 있음  
 %나 _가 문자열에 포함될 경우 escape를 지정해서 탈출 문자를 지정  
 ```sql
-//name에 da가 포함된 튜플 리턴
+--name에 da가 포함된 튜플 리턴
 Select name
 from professor
 where name like '%da%';
 
-//title이 100%인 튜플 리턴
+--title이 100%인 튜플 리턴
 Select cID
 from cource
 where title like '100\%' escape '\';
@@ -83,6 +76,7 @@ order by 절을 사용하여 결과 튜플이 정렬된 순서로 나타나게 �
 기본 값은 오름차순 정렬(asc) 내림차순으로 정렬하려면 desc 키워드 사용.  
 여러 속성을 지정하면 앞의 속성으로 정렬한 결과를 다시 뒤의 속성으로 정렬.  
 ```sql
+--instructor 테이블에서 salary를 내림차순으로 정렬 후, name을 오름차순으로 정렬
 select *
 from instructor
 order by salary desc, name;
@@ -105,14 +99,14 @@ where salary between 90000 and 10000;
 |교집합|intersect|
 |차집합|except|
 ```sql
-//합집합 연산
+--합집합 연산
 (Select cID from teaches
 where semester = 'Fall' and year = 2009)
 union 
 (Select cID from teaches
 where semester = 'Fall' and year = 2010)
 
-//all을 붙이면 중복 허용
+--all을 붙이면 중복 허용
 (Select cID from teaches
 where semester = 'Fall' and year = 2009)
 union all
