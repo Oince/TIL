@@ -42,8 +42,6 @@ Select name, title
 from (professor natural join teaches) join cource using(cID);
 ```
 
-
-
 ### 재명명 연산  
 as 키워드(생략 가능)으로 속성명 또는 테이블명 재명명 가능.  
 ```sql
@@ -113,6 +111,13 @@ union all
 (Select cID from teaches
 where semester = 'Fall' and year = 2010)
 ```
+
+## 중첩 서브 질의
+
+
+
+
+
 
 출처  
 데이터베이스 I 이론 및 실제, 이상호  
