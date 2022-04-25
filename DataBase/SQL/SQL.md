@@ -93,7 +93,9 @@ Delete from professor where deptName='CS';
 레코드를 수정하는 연산
 ```sql
 --professor 테이블의 레코드 중에 salary가 3000이상이면 salary 값을 수정
-Update professor set salary = salary * 1.03 where salary > 3000;
+Update professor 
+set salary = salary * 1.03 
+where salary > 3000;
 ```
 
 조건이 여러개일 경우 case 문을 사용할 수 있음  
