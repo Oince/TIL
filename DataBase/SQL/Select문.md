@@ -113,6 +113,140 @@ where semester = 'Fall' and year = 2010)
 ```
 
 ## 중첩 서브 질의
+from, where절에 select문이 중첩되어 들어갈 수 있으며, 이를 중첩 서브 질의라고 함.  
+
+### in 연산자
+in 연산자는 select절에 의해 생성된 집합의 값과 조건 집합의 값이 같은지를 판별하는 연산자이다.  
+not in 도 가능
+```sql
+--pID가 10,21,22 중에 속하면 참
+Select name, salary
+from professor
+where pID in (10,21,22);
+
+--서브 질의의 결과의 cID값이 teaches 테이블의 cID 값과 같으면 그 튜플을 결과에 포함
+Select distinct cID
+from teaches
+where semester = 'Fall' and year = 2009 and
+cID in (select cID from teaches
+        where semester = 'Spring' and year = 2010);
+
+--in 연산자의 앞에 여러개의 속성이 와도 됨
+Select count(sID)
+from takes
+where (cID,semester,year)
+in (select cID, semester, year from teaches where pID=10);
+```
+
+### 비교 연산자
+비교 연산자는 집합간의 비교를 위한 연산자이다.  
+1. some (= any)  
+   집합 중 하나라도 조건을 만족하면 참
+2. all  
+   모든 원소가 조건을 만족하면 참
+
+=some 은 in 연산자와 같고, <>all 은 not in 과 같다.  
+
+```sql
+--CS학과 교수 중 적어도 한명의 임금보다 높은 임금을 받는 교수를 찾는 쿼리
+Select name
+from professor
+where salary > some(select salary
+                    from professor
+                    where deptName = 'CS');
+
+--모든 CS학과 교수보다 높은 임금을 받는 교수를 찾는 쿼리
+Select name
+from professor 
+where salary > all(select salary
+                    from professor
+                    where deptName = 'CS');
+```
+
+### 상관 서브 질의
+내부 중첩 질의에서 외부 테이블을 참조하면 상관 서브 질의라고 함.  
+외부 테이블에서 튜플 한개를 가져와 이를 기준으로 내부 질의를 수행해야 하기 때문에 실행 시간이 오래 걸린다.  
+
+__exists__ 키워드는 내부 질의 수행시 결과가 존재하면 참을 반환한다.  
+```sql
+--
+Select S.sID
+from teaches as S
+where S.semester = 'Fall' and S.year = 2009 and
+exists(select * from teaches as T
+       where T.semester = 'Fall' and T.year = 2010 and S.cID = T.cID);
+```
+만약 
+__not exists__ 는 결과가 존재하지 않으면 참을 반환한다.  
+이 키워드를 사용하여 집합 포함 관계를 나타낼 수 있다.  
+A가 B를 포함한다면 
+```sql
+not exists(B except A)
+```
+위의 식은 참이다.  
+이것을 이용하여 관계 대수의 나눗셈 연산을 구현할 수 있다.  
+```sql
+--CS 학과에서 개설한 모든 과목을 수강한 학생을 찾는 질의
+Select S.sID, S.name
+from student as S
+where not exists(
+   (select cID
+    from course
+    where deptName = 'CS')
+   except (
+      select cID
+      from takes as T
+      where T.sID = S.sID)
+);
+```
+
+### __unique__
+unique 구문은 서브 질의가 중복된 튜플을 가지지 않는다면 참을 반환한다.    
+not unique도 가능하며, 빈 집합(null)은 참이다.  
+```sql
+--2009년에 개설되지 않았거나 한번만 개설된 과목을 찾는 질의
+Select C.cID
+from course as C
+where unique(
+   select T.cID
+   from teaches as T
+   where C.cID = T.cID and T.year = 2009
+);
+```
+튜플의 속성 중 하나라도 null이면 동일하지 않다고 판단하여 참을 반환함.  
+```sql
+unique(<1,2>, <1,null>) -> true
+unique(<1,null>, <1,null>) -> true
+```
+
+## from절 서브 질의
+서브 질의를 from절에서도 사용 가능함.  
+```sql
+Select deptName, avgSalary
+from (select deptName, avg(salary) as avgSalary
+      from professor
+      group by deptName)
+where avgSalary > 7000
+
+Select max()
+```
+group by 절을 from 절 안으로 넣고, having 절의 역할을 where절이 대신하므로 having절을 사용할 필요가 없다.  
+서브 질의의 결과를 as 연산자를 통해 재명명도 가능하다.  
+
+기본적으로 from 절의 서브 질의는 다른 테이블을 참조하지 못한다.  
+하지만 __lateral__ 절을 사용하면 서브 질의에서 from절의 다른 테이블을 참조할 수 있다.  
+
+```sql
+Select P1.name, P1.salary, avgSalary
+from professor as P1, lateral(
+   select avg(P2.salary) as avgSalary
+   from professor as P2
+   where P1.deptName = P2.deptName);
+```
+
+
+
+
 
 
 
