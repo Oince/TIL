@@ -169,7 +169,7 @@ where salary > all(select salary
 
 __exists__ 키워드는 내부 질의 수행시 결과가 존재하면 참을 반환한다.  
 ```sql
---
+--2009년 가을학기와 2010년 가을학기에 모두 개설된 과목을 구하는 질의
 Select S.sID
 from teaches as S
 where S.semester = 'Fall' and S.year = 2009 and
@@ -200,7 +200,7 @@ where not exists(
 );
 ```
 
-### __unique__
+### unique 연산자
 unique 구문은 서브 질의가 중복된 튜플을 가지지 않는다면 참을 반환한다.    
 not unique도 가능하며, 빈 집합(null)은 참이다.  
 ```sql
@@ -219,16 +219,28 @@ unique(<1,2>, <1,null>) -> true
 unique(<1,null>, <1,null>) -> true
 ```
 
+### with 절
+with 절은 임시적으로 SQL 문장의 결과를 저장하는 역할을 한다.  
+with절의 범위는 with절이 있는 SQL문장에서만 유효하다.  
+```sql
+--예산이 가장 많은 부서를 찾는 질의
+with max_budget(value) as 
+   (select max(budget)
+    from department)
+Select deptName, budget
+from department, max_budget
+where department.budget = max_budget.value;
+```
+
 ## from절 서브 질의
 서브 질의를 from절에서도 사용 가능함.  
 ```sql
+--평균 급여가 7000이상인 학과에 속한 교수들의 평균 급여를 구하는 질의
 Select deptName, avgSalary
 from (select deptName, avg(salary) as avgSalary
       from professor
       group by deptName)
 where avgSalary > 7000
-
-Select max()
 ```
 group by 절을 from 절 안으로 넣고, having 절의 역할을 where절이 대신하므로 having절을 사용할 필요가 없다.  
 서브 질의의 결과를 as 연산자를 통해 재명명도 가능하다.  
@@ -237,6 +249,7 @@ group by 절을 from 절 안으로 넣고, having 절의 역할을 where절이 �
 하지만 __lateral__ 절을 사용하면 서브 질의에서 from절의 다른 테이블을 참조할 수 있다.  
 
 ```sql
+--교수의 이름, 급여, 소속된 학과의 평균 급여를 구하는 질의
 Select P1.name, P1.salary, avgSalary
 from professor as P1, lateral(
    select avg(P2.salary) as avgSalary
@@ -244,14 +257,19 @@ from professor as P1, lateral(
    where P1.deptName = P2.deptName);
 ```
 
-
-
-
-
-
-
-
-
+## 스칼라 서브 질의
+서브 질의가 하나의 속성을 가지는 하나의 튜플만을 반환한다면, 서브 질의가 연산식에서 값이 반환되는 어떤 곳에서도 나타날 수 있다. 이를 스칼라 서브 질의라고 한다.  
+스칼라 서브 질의는 select, where, having절에서 나타날 수 있다.  
+만약 스칼라 서브 질의가 여러개의 튜플을 반환한다면 런타임 에러가 발생한다.  
+```sql
+--모든 학과의 이름과 그 학과의 교수의 수를 구하는 질의
+Select deptName, (
+   select count(*)
+   from professor as p1
+   where d1.deptName = p1.deptName
+)
+from department d1;
+```
 
 출처  
 데이터베이스 I 이론 및 실제, 이상호  
