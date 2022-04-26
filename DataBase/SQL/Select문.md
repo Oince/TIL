@@ -202,7 +202,7 @@ where not exists(
 
 ### unique 연산자
 unique 구문은 서브 질의가 중복된 튜플을 가지지 않는다면 참을 반환한다.    
-not unique도 가능하며, 빈 집합(null)은 참이다.  
+빈 집합(null)은 참이며 not unique도 가능하다.  
 ```sql
 --2009년에 개설되지 않았거나 한번만 개설된 과목을 찾는 질의
 Select C.cID
