@@ -123,25 +123,5 @@ dynamic scope는 scope가 함수의 호출 순서에 의해 정해진다.
 ### scope and lifetime
 scope와 lifetime은 서로 연관이 있으나, 지역 변수이면서 lifetime은 static인 변수를 만들 수 있다.(c/c++ 의 static 키워드)
 
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 출처  
 Concepts of programming languages, Robert W. Sebesta

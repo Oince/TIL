@@ -31,6 +31,3 @@ Object-oriented 방식을 지원하는 언어에서는 다음 3가지 특징을 
 polymorphism(다형성)의 일종으로 dynamic dispatch라고도 함.  
 포인터가 현재 참조하고 있는 객체가 무엇인지에 따라 호출하는 메소드가 달라지게 하는 포인터를 **polymorphic reference**라고 한다.  
 overriding 했을 때, 혹은 abstract 메소드를 구현할 때 적용된다.  
-
-
-

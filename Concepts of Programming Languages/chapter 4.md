@@ -17,10 +17,9 @@ LL의 의미는 인풋을 왼쪽부터 스캔하고, leftmost derivation한다�
 가장 널리 알려진 top-down 알고리즘은 __recursive-descent parser__ 이다.  
 nonterminal을 함수로 만들고, 재귀함수를 이용하여 구현한다.  
 
-
 ### Bottom-up parsing
 __bottom-up__ 방식은 문장을 조합하면서 start symbol로 만들면서 분석하는 방법이며, LR 파싱이라고도 불린다.  
 이 방식은 상태와 요소를 저장하는 스택과 두 개의 테이블로 파싱한다.  
-**Action** 테이블은 
+**Action** 테이블은 상태 또는 룰이 적혀있고 상태 변화시 스택에 해당하는 nonterminal과 그 상태를 스택에 넣는다.  
 
-
+룰을 적용할 때는 스택에서 nonterminal을 꺼내 reduce하고 해당하는 상태의 **goto**테이블에서 terminal을 찾아 스택에 넣는다.  

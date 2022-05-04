@@ -19,5 +19,3 @@ Abstract data type의 인스턴스를 object(객체)라고 함.
 객체는 ADT에 있는 연산으로만 바뀔 수 있음.  
 
 c++, objective-c와 같은 언어에서는 ADT의 명세 부분(specification) 과 구현 부분(implementation)부분을 구별하지만 java에서는 명세 부분이 따로 존재하지 않는다.  
-
-

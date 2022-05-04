@@ -29,7 +29,7 @@ character 타입은 ascii 코드를 사용했으나 표현해야 할 문자가 �
 \d = 숫자
 + = 하나 또는 여러개가 올 수 있음.
 * = 어떤 문자열과도 일치함
-? = 어떤 문자 하나와도 일치함
+? = 어떤 문자와도 일치함
 ```
 
 ### 문자열 길이
@@ -54,11 +54,71 @@ Enumeration 타입은 변수가 가질 수 있는 값을 나열하여 값을 제
 readablilty와 reliability가 좋아진다는 장점이 있다.  
 
 ## Array type
-같은 형태의 자료를 저장하는 구조체이며 인덱스(= subscripts)를 통해 자료들을 식별한다.  
+같은 형태의 자료를 저장하는 타입이며 인덱스(= subscripts)를 통해 자료들을 식별한다.  
 **rectangular array**는 행렬과 같이 직사각형의 형태만을 갖는 array이다.  
 **jagged array**는 행의 길이가 같지 않는 array이다.  
- 
 
+## Associative array
+array와 같이 같은 형태의 자료를 저장하지만 **key**를 이용해서 자료에 접근한다.  
+자료를 key와 value의 쌍으로 저장한다.   
+검색이 요구될 때, 자료가 쌍으로 저장될 때 유용하다.  
 
+## record type
+record 타입은 다른 종류의 자료들을 모아서 저장하는 타입이다.  
+COBOL에서 처음 소개되었으며 자료에 접근할 때 **field** 이름으로 접근한다.  
+대부분의 언어에서 dot notation을 사용하여 필드에 접근한다.  
+**fully qualified reference**는 중간 필드명을 전부 적는 것이고  
+**elliptical reference**는 결과가 모호하지 않다면 중간 필드명을 생략하는 것이다.  
 
+## tuple type
+record 타입과 비슷하게 서로 다른 자료형을 저장하지만 자료에 대한 접근은 array과 같이 인덱스를 통해 접근한다.  
 
+## List type
+list 타입은 처음에 함수형 언어에서 사용하던 타입이었으나 명령형 언어에서도 사용함.  
+
+## Union type
+union 타입은 같은 저장 공간을 여러개의 자료형이 저장될 수 있는 타입.  
+각각의 필드가 서로 배타적일 때 사용함.  
+c/c++에서는 형변환이 자유롭기 때문에 free union 이라고 하고 
+discriminant라는 태그를 붙여서 형변환을 하는 것을 discriminanted union이라고 한다.  
+
+## Pointer type
+**pointer** 타입은 변수가 저장되어 있는 메모리의 주소를 저장하는 타입이다.  
+유효하지 않은 주소를 참조할 때 **nii**이라는 값을 참조한다.  
+
+포인터 타입의 목적은 두가지 이다.
+1. indirect addressing
+2. heap-dynamic 저장공간 관리 
+
+c에서의 malloc, 객체 지향 언어에서의 new 키워드가 heap-dynamic 변수를 할당한다.  
+
+포인터의 문제점은 
+1. dangling pointer
+2. lost heap-dynaimc variable (garbage)
+
+**dangling pointer**는 이미 할당이 해제된 변수를 참조하고 있는 포인터 변수를 말한다.  
+같은 heap-dynamic 변수를 참조하고 있는 두 개의 포인터 변수가 있을 때 하나의 포인터 변수만 할당을 해제할 경우 생길 수 있다.   
+dangling pointer는 잘못된 위치에서 잘못된 연산을 수행할 수 있기 때문에 garbage보다 더 위험하다  
+
+이 문제를 해결하기 위해 **tombstone** 방법이 있다.  
+tombstone은 포인터가 직접 heap-dynaimc 변수를 가리키는 것이 아닌 그 둘 사이에 tombstone이라는 것을 놓아서 포인터 변수가 tombstone을 가리키게 하고 메모리 할당을 해제할 때 tombstone을 nil로 바꾸는 방법이다.  
+
+**lost heap-dynaimc variable**은 **garbage**라고도 하며 heap-dynaimc variable을 참조하는 포인터가 없는 것을 말한다.  
+이는 사용할 수 없는 변수이기 때문에 메모리의 누수를 야기한다.  
+
+이를 해결하기 위해 **reference counter**를 사용한다.  
+변수에 현재 이 변수를 참조하고 있는 포인터 변수의 개수를 저장하고, 그 개수가 0이 되면 메모리 할당을 해제하는 방식이다.  
+eager 방식은 counter가 0이 되자 마자 회수하는 방식이고, 
+lazy 방식은 counter가 0이 되도 기다렸다가 메모리가 부족할 때 한번에 회수하는 방식이다.  
+
+## Type checking
+타입 체킹은 연산자가 맞는지, 피연산자가 묵시적 형변환을 통해 맞는 타입으로 변하는지를 체크하는 것이다.  
+이때 묵시적 형변환은 **coercion**이라고 한다.  
+반대로 명시적 형변환은 **cast**라고 한다.  
+
+**strong type**언어는 계산시 타입이 다르면 에러가 발생하는 언어이고, 
+**weak type**언어는 계산시 타입이 달라도 coercion을 통해 계산하는 언어이다.  
+c/c++ 는 weak type언어에 속하고 java,C#등은 strong type 언어에 속한다.  
+
+**name type equivalence**는 타입의 이름이 같으면 같은 타입으로 여기는 것이고,  
+**structure type equivalence**는 타입의 이름이 달라도 구조가 같으면 같은 타입으로 여기는 것이다.  
