@@ -109,15 +109,3 @@ int epoll_wait(int epfd, struct epoll_event *event, int maxevents, int timeout);
 |event|이벤트 발생시 관련 정보를 저장|
 |maxevents|최대 이벤트 개수|
 |timeout||
-
-
-
-
-
-
-
-
-
-
-
-

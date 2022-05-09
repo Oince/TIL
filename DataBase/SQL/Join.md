@@ -62,6 +62,3 @@ from student natural right outer join takes;
 Select * 
 from student natural full outer join takes;
 ```
-
-
-

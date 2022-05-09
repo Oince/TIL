@@ -67,7 +67,7 @@ Alter table professor drop salary;
 데이터베이스 인스턴스를 조작하는 언어.  
 인스턴스 생성, 조회, 삭제, 변경 등의 기능을 지원함.  
 
-[Select 문은 내용이 길어져서 분리]()
+[Select 문은 내용이 길어져서 분리](/DataBase/SQL/Select문.md)
 
 ### Insert
 레코드를 입력하는 연산

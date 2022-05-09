@@ -138,17 +138,3 @@ int pthread_mutex_destory(pthread_mutex_t *mutex);
 ```
 뮤텍스 객체를 제거하는 함수.  
 성공시 0, 실패시 에러코드 반환  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
