@@ -5,8 +5,7 @@
 - binary = 피연산자가 2개
 - ternary = 피연산자가 3개
 
-어떤 연산자를 먼저 계산할 것인지를 정하는 operator precedence 규칙과, 우선순위가 같은 연산자들을 어느 쪽부터 계산할 건지를 정하는 
-associativity 규칙을 정해햐 함
+어떤 연산자를 먼저 계산할 것인지를 정하는 operator precedence 규칙과, 우선순위가 같은 연산자들을 어느 쪽부터 계산할 건지를 정하는 associativity 규칙을 정해햐 함
 
 ### side effect
 함수 호출시 함수가 자신의 변수 이외의 변수를 바꾸는 행위를 side effect라고 함.  

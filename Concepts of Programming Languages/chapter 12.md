@@ -31,3 +31,13 @@ Object-oriented 방식을 지원하는 언어에서는 다음 3가지 특징을 
 polymorphism(다형성)의 일종으로 dynamic dispatch라고도 함.  
 포인터가 현재 참조하고 있는 객체가 무엇인지에 따라 호출하는 메소드가 달라지게 하는 포인터를 **polymorphic reference**라고 한다.  
 overriding 했을 때, 혹은 abstract 메소드를 구현할 때 적용된다.  
+
+## Design issue
+
+- 순수한 객체 지향 언어는 속도가 느리다
+  - 따라서 primitive type이 존재하는 언어가 있음
+- 서브 클래스를 서브 타입으로 여길 것인지?
+  - 자바는 이를 허용함
+- 다중 상속을 허용할 것인지?
+  - 허용할 경우 diamond inheritance 문제가 발생할 수 있음
+  - c++는 다중 상속을 허용함

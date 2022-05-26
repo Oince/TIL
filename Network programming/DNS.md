@@ -71,21 +71,18 @@ dig @a.root-servers.net www.example.com
 DNS 메세지는 다섯가지 부분으로 나뉨  
 <img src = "data:image/png;base64,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">
 
-- Header
-  - 메세지의 헤더 부분
-- Question
-  - 보내는 질문의 정보
-- Answer
-  - 질문에 대한 답
-- Authority
-  - 다른 name server의 주소
-- Additional
-  - 추가적인 정보
+| Field      |                         |
+| ---------- | ----------------------- |
+| Header     | 메세지의 헤더 부분      |
+| Question   | 보내는 질문의 정보      |
+| Answer     | 질문에 대한 답          |
+| Authority  | 다른 name server의 주소 |
+| Additional | 추가적인 정보           |
 
 ### Header
 
 DNS 메세지 헤더는 총 12바이트로 구성됨  
-<img src="https://www.oreilly.com/library/view/hands-on-network-programming/9781789349863/assets/346de5c8-e0a1-4694-bee3-2ffd68761f09.png">
+<img src="https://www.oreilly.com/library/view/hands-on-network-programming/9781789349863/assets/346de5c8-e0a1-4694-bee3-2ffd68761f09.png" height=300 width=500>
 
 | Field   | 의미                                                         |
 | :------ | :----------------------------------------------------------- |
@@ -132,7 +129,10 @@ answer 에는 질의한 호스트에 대한 정보가 들어간다
 | RDLENGTH   | data의 길이                          |
 | RDATA      | data, type에 따라 해석 방법이 달라짐 |
 
-
+answer의 name은 question에 있는 name과 중복된다.  
+중복을 제거하고 전송 효율을 높이기 위해서 answer에 있는 length의 상위 2비트가 11이면 이 필드는 **포인터**로 작동한다.  
+이후에 오는 14bit는 해당 네임이 있는 위치 정보를 저장한다.  
+위치 정보는 메세지의 시작부터 얼마나 떨어져 있는지를 나타낸다.  
 
 
 
