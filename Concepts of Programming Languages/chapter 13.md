@@ -44,7 +44,8 @@ Java는 thread를 생성할 때 두 가지의 방법이 있다.
 *Thread*클래스는 runnable 인터페이스를 구현한 클래스이다.  
 Thread 클래스를 사용할 때는 클래스를 상속받아 **run**메소드를 오버라이딩 한다.  
 run 메소드는 스레드의 메인 함수와 같은 역할을 한다.  
-run 메소드에 thread에서 수행할 작업을 작성하고, **start** 메소드를 통해 thread를 실행한다.  
+run 메소드에 thread에서 수행할 작업을 작성하고, **start** 메소드를 통해 thread를 실행하면 오버라이딩된 run()메소드가 실행된다 
+
 ```java
 class myThread extends Thread {
   public void run() {
@@ -69,6 +70,7 @@ public void run() {
 ```
 
 runnable 인터페이스를 사용할 경우 해당 인터페이스를 구현한 클래스를 만들고, 그 객체를 Thread 클래스의 생성자에 넣어 Thread 객체를 생성한 후 같은 방법으로 사용할 수 있다.
+
 thread는 일반적으로 run 메소드가 종료하면 같이 종료된다.  
 
 ### competition synchronization

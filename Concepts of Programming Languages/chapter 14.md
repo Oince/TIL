@@ -16,6 +16,8 @@ Exception handling은 **Exception handler**에 의해 처리된다.
   - 사용자가 정의한 예외
   - 명시적으로 던져야 함
 
+<img src="예외 처리 흐름도.png">
+
 하나의 블록 안에서 예외가 발생할 경우 예외를 Exception handler에게 넘긴다.  
 이 때 발생한 예외의 타입을 같이 넘기면, 타입에 맞는 Exception handler가 예외를 처리한다.  
 만약 맞는 타입의 Exception handler가 없으면 예외는 처리되지 않고 프로그램이 종료된다.  

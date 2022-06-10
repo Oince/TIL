@@ -31,7 +31,7 @@ alias의 종류
 변수가 배정문의 오른쪽에 있을 때 그 변수의 값으로 여기지기 때문에 r-value라고도 함.  
 
 ### 4. type 
-6장에서 자세히 다룸
+[6장에서 자세히 다룸](chapter 6.md)
 
 ## Binding
 바인딩은 변수와 그 변수의 속성을 결합하는 것.  
@@ -40,6 +40,7 @@ alias의 종류
 바인딩에는 static 과 dynamic 방식이 있음  
 static은 실행 전(컴파일 타임)에 바인딩되고 실행 후에 변하지 않는 것을 뜻함.  
 dynamic은 실행 후(런타임)에 바인딩 되고 이후에 바뀔 수 있음을 뜻함.  
+
 | 종류    | 실행 시점              | 값의 변화 |
 | ------- | ---------------------- | --------- |
 | static  | 실행 전(= 컴파일 타임) | 불가능    |
@@ -95,24 +96,24 @@ heap영역에 할당되며, 포인터나 참조 변수로만 해당 변수에 �
 c의 malloc, c++의 new 연산자 등이 heap-dynamic 변수를 만드는 역할을 하고 c의 free(), c++의 delete 등이 할당을 해제하는 역할을 함. 
 
 ## scope
-변수가 참조되거나 배정될 수 있는 범위를 scope라고 한다.  
+변수가 참조되거나 배정될 수 있는 범위를 **scope**라고 한다.  
 
 ### static scope
 static scope는 컴파일 시점에 scope가 정해지는 것.  
 대부분의 언어가 static scope를 사용함.  
 scope의 접근 범위는 3가지가 있음
-1. global
-2. local
-3. non-local (nested 함수 허용시)
+1. **global**
+2. **local**
+3. **non-local** (nested 함수 허용시)
 
-global은 어떤 곳에서도 접근할 수 있는 변수를 의미하고, local은 블록 안에서 정의된 변수이고, 해당 블록 안에서만 접근 가능하다.  
+**global**은 어떤 곳에서도 접근할 수 있는 변수를 의미하고, **local**은 블록 안에서 정의된 변수이고, 해당 블록 안에서만 접근 가능하다.  
 global 변수는 이름이 같은 local변수가 있을 때 숨겨진다.  
 global 변수를 사용하기 위해 scope operator를 사용하여 변수의 scope를 지정할 수 있다.  
 global 변수는 모듈 간의 결합도를 높이기 때문에 최소한으로 사용해야 한다.  
 
 nested 함수를 허용한다는 것은 함수 안에 함수를 정의할 수 있다는 의미.  
 하나의 함수 안에 또 다른 함수가 정의되어 있을 경우 밖에 있는 함수를 안에 있는 함수의 static parent 라고 하고 그 부모의 부모들을 static ancestors라고 한다.  
-nested 함수를 허용하는 언어에서는 static ancestors에 있는 변수를 접근할 수 있는데, 이것을 non-local 변수라고 한다.   
+nested 함수를 허용하는 언어에서는 static ancestors에 있는 변수를 접근할 수 있는데, 이것을 **non-local** 변수라고 한다.   
 
 새로운 scope를 만드는 방법으로 **block**이 있음
 ALGOL에서는 begin-end 를 사용했지만 C계열 언어에서는 중괄호를 사용함.  
