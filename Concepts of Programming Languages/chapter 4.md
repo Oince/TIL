@@ -8,6 +8,7 @@ state transition diagram을 이용하여 만들고 구현은 재귀함수를 이
 ## syntax analyzer
 syntax analyzer는 인풋으로 들어온 프로그램이 문법적으로 맞는지 체크하며, parse tree를 생성하는 역할을 한다.  
 syntax analysis는 parsing이라고도 하며, parsing 방식에는 두가지 방식이 있다.  
+
 1. top-down parsing
 2. bottom-up parsing
 
