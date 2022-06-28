@@ -41,15 +41,22 @@ URN과 URL 두가지 방식이 있다
 
 ### URL
 
-URL은 5가지 부분으로 나뉜다
+URL은 7가지 부분으로 나뉜다
 
 ```
-https://www.google.com:443/search?q=hello&hl=ko
+scheme://[userinfo@]host[:port][/path][?query][#fragment]
+예시)https://www.google.com:443/search?q=hello&hl=ko
 ```
 
 - 프로토콜 : https
+  - http, https, ftp 등의 프로토콜
+
+- userinfo
+  - URL에 사용자 정보를 포함에서 인증
+  - 거의 사용하지 않음
+
 - 호스트 이름: www.google.com
-  - ip주소도 입력 가능
+  - 도메인명 또는 ip주소 사용 가능
 
 - 포트 번호 : 443
   - http는 80, https는 443포트가 기본값, 기본값인 경우 생략 가능
@@ -57,6 +64,10 @@ https://www.google.com:443/search?q=hello&hl=ko
   - 리소스의 경로
 - query string: q=hello&hl=ko
   - key=value 형태
+  - ?으로 시작하고 &로 추가할 수 있음
+- fragment
+  - html 내부 북마크 등에 사용 ex)위키피디아
+
 
 ## HTTP Request
 
