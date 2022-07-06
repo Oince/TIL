@@ -84,6 +84,8 @@ HTTP 메세지는 3가지로 나뉘고, header와 body 사이는 CRLF로 구분
 
 URI는 리소스만 식별하고 리소스를 대상으로 하는 행위를 HTTP method로 구분한다.
 
+### 종류
+
 - GET: 리소스 조회
   - 데이터는 query를 통해 전달
   - 메세지 바디를 사용할 수 있지만 권장되지 않음 
@@ -96,7 +98,7 @@ URI는 리소스만 식별하고 리소스를 대상으로 하는 행위를 HTTP
 - PATCH: 리소스 부분 변경
 - DELETE: 리소스 삭제
 
-HTTP method의 속성
+### 속성
 
 - 안전(safe)
   - 호출해도 리소스를 변경하지 않는 속성
@@ -109,6 +111,48 @@ HTTP method의 속성
 - 캐시 가능(cacheable)
   - 결과 리소스를 캐시해서 사용하는 속성
   - GET, HEAD, POST, PATCH 가 해당하지만 실제로는 GET, HEAD 정도만 사용 
+
+## HTTP Method 활용
+
+### 데이터 전송
+
+- 정적 데이터 조회
+  - 이미지나 정적 텍스트 문서를 조회
+  - GET 지원
+- 동적 데이터 조회
+  - 쿼리 파라미터 사용
+  - 필터나 정렬 조건에 주로 사용함
+  - GET 지원
+- HTML Form을 통한 데이터 전송
+  - HTML의 form 태그를 이용해서 데이터 전송
+  - GET 사용시 URL에 쿼리 스트링으로 전송함
+  - POST 사용시 쿼리 스트링과 유사한 형식(key=value)을 메세지 바디에 넣어서 전송
+    - POST 요청시 Content-Type 헤더는 application/x-www-form-urlencoded로 설정됨
+  - 파일을 같이 전송할 경우  Content-Type 헤더를 multipart/form-data로 설정하고 boundary에 구분자를 지정
+  - GET, POST 지원
+
+- HTTP API를 이용한 데이터 전송
+  - 메세지 바디에 데이터를 넣어서 전송
+  - 서버끼리의 통신이나, 앱 클라이언트, ajax통신에 사용
+  - 주로 JSON형식을 사용한다
+
+### 설계 방법
+
+- POST 기반 등록
+  - 서버가 리소스의 URI를 생성하고 관리함
+  - 클라이언트가 등록될 리소스의 URI를 모르는 경우
+  - 서버가 Location헤더에 새로 생성된 리소스의 URI를 알려줌
+  - 이때 POST 요청을 보낸 URI를 **Collection** 이라고 함
+    - 컬렉션은 서버가 관리하는 리소스 디렉토리
+  - ex) POST /members
+- PUT 기반 등록
+  - 클라이언트가 직접 리소스의 URI를 지정해야함 
+  - 클라이언트가 리소스의 URI를 알고 있어야 함
+  - 클라이언트가 관리하는 리소스 저장소가 **Store**
+  - ex) PUT /files
+- 컨트롤 URI
+  - 동사로 된 리소스 경로를 사용하는 것
+  - HTTP 메서드로 동작을 나타내기 어려운 경우에 사용
 
 ## HTTP 상태 코드
 
