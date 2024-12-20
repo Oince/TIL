@@ -3,7 +3,7 @@ using namespace std;
 
 void star(int n, int i, int j) {
     if(n == 1) 
-        cout << "*";
+        cout << "*";    
     else if((i / (n / 3)) % 3 == 1 && (j / (n / 3)) % 3 == 1)
         cout << " ";
     else
