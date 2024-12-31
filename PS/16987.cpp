@@ -11,7 +11,7 @@ struct Egg {
 Egg egg[10];
 
 void func(int depth) {
-    if(depth == n) {
+    if(depth > n) {
         return;
     }
 
