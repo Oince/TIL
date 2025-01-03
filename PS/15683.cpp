@@ -10,51 +10,73 @@ int board[10][10];
 int visited[10][10];
 vector<pair<int, int>> cctvs;
 
+int dx[4] = {0, 1, 0, -1};
+int dy[4] = {1, 0, -1, 0};
+
+bool OOB(int x, int y) {
+    return x < 0 || x >= n || y < 0 || y >= m;
+}
+
 //0 -> 오른쪽, 1 -> 아래
 //2 -> 왼쪽,  3 -> 위
 int visiting(int direction, pair<int, int> start, int depth) {
     auto cur = start;
     int ret = 0;
-    if(direction == 0) {
-        cur.Y += 1;
-        while(cur.Y < m && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
-                ret++;
-                visited[cur.X][cur.Y] = depth;
-            }
-            cur.Y += 1;
+
+    cur.X += dx[direction];
+    cur.Y += dy[direction];
+
+    while(!OOB(cur.X, cur.Y) && board[cur.X][cur.Y] != 6) {
+
+        if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
+            ret++;
+            visited[cur.X][cur.Y] = depth;
         }
+        
+        cur.X += dx[direction];
+        cur.Y += dy[direction];
     }
-    else if(direction == 1) {
-        cur.X += 1;
-        while(cur.X < n && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
-                ret++;
-                visited[cur.X][cur.Y] = depth;
-            }
-            cur.X += 1;
-        }
-    }
-    else if(direction == 2) {
-        cur.Y -= 1;
-        while(cur.Y >= 0 && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
-                ret++;
-                visited[cur.X][cur.Y] = depth;
-            }
-            cur.Y -= 1;
-        }
-    }
-    else if(direction == 3) {
-        cur.X -= 1;
-        while(cur.X >= 0 && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
-                ret++;
-                visited[cur.X][cur.Y] = depth;
-            }
-            cur.X -= 1;
-        }
-    }
+
+    // if(direction == 0) {
+    //     cur.Y += 1;
+    //     while(cur.Y < m && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
+    //             ret++;
+    //             visited[cur.X][cur.Y] = depth;
+    //         }
+    //         cur.Y += 1;
+    //     }
+    // }
+    // else if(direction == 1) {
+    //     cur.X += 1;
+    //     while(cur.X < n && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
+    //             ret++;
+    //             visited[cur.X][cur.Y] = depth;
+    //         }
+    //         cur.X += 1;
+    //     }
+    // }
+    // else if(direction == 2) {
+    //     cur.Y -= 1;
+    //     while(cur.Y >= 0 && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
+    //             ret++;
+    //             visited[cur.X][cur.Y] = depth;
+    //         }
+    //         cur.Y -= 1;
+    //     }
+    // }
+    // else if(direction == 3) {
+    //     cur.X -= 1;
+    //     while(cur.X >= 0 && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == 0) {
+    //             ret++;
+    //             visited[cur.X][cur.Y] = depth;
+    //         }
+    //         cur.X -= 1;
+    //     }
+    // }
 
     return ret;
 }
@@ -63,42 +85,55 @@ int visiting(int direction, pair<int, int> start, int depth) {
 //2 -> 왼쪽,  3 -> 위
 void unvisiting(int direction, pair<int, int> start, int depth) {
     auto cur = start;
-    if(direction == 0) {
-        cur.Y += 1;
-        while(cur.Y < m && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
-                visited[cur.X][cur.Y] = 0;
-            }
-            cur.Y += 1;
-        }
+
+    cur.X += dx[direction];
+    cur.Y += dy[direction];
+
+    while(!OOB(cur.X, cur.Y) && board[cur.X][cur.Y] != 6) {
+
+        if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) 
+            visited[cur.X][cur.Y] = 0;
+        
+        cur.X += dx[direction];
+        cur.Y += dy[direction];
     }
-    else if(direction == 1) {
-        cur.X += 1;
-        while(cur.X < n && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
-                visited[cur.X][cur.Y] = 0;
-            }
-            cur.X += 1;
-        }
-    }
-    else if(direction == 2) {
-        cur.Y -= 1;
-        while(cur.Y >= 0 && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
-                visited[cur.X][cur.Y] = 0;
-            }
-            cur.Y -= 1;
-        }
-    }
-    else if(direction == 3) {
-        cur.X -= 1;
-        while(cur.X >= 0 && board[cur.X][cur.Y] != 6) {
-            if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
-                visited[cur.X][cur.Y] = 0;
-            }
-            cur.X -= 1;
-        }
-    }
+
+    // if(direction == 0) {
+    //     cur.Y += 1;
+    //     while(cur.Y < m && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
+    //             visited[cur.X][cur.Y] = 0;
+    //         }
+    //         cur.Y += 1;
+    //     }
+    // }
+    // else if(direction == 1) {
+    //     cur.X += 1;
+    //     while(cur.X < n && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
+    //             visited[cur.X][cur.Y] = 0;
+    //         }
+    //         cur.X += 1;
+    //     }
+    // }
+    // else if(direction == 2) {
+    //     cur.Y -= 1;
+    //     while(cur.Y >= 0 && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
+    //             visited[cur.X][cur.Y] = 0;
+    //         }
+    //         cur.Y -= 1;
+    //     }
+    // }
+    // else if(direction == 3) {
+    //     cur.X -= 1;
+    //     while(cur.X >= 0 && board[cur.X][cur.Y] != 6) {
+    //         if(board[cur.X][cur.Y] == 0 && visited[cur.X][cur.Y] == depth) {
+    //             visited[cur.X][cur.Y] = 0;
+    //         }
+    //         cur.X -= 1;
+    //     }
+    // }
 }
 
 void backtracking(int depth, int cnt) {
@@ -112,7 +147,9 @@ void backtracking(int depth, int cnt) {
     if(type == 1) {
         for(int i = 0; i < 4; i++) {
             int ret = visiting(i, cctv, depth + 1);
+
             backtracking(depth + 1, cnt + ret);
+
             unvisiting(i, cctv, depth + 1);
         }
     }
@@ -120,7 +157,9 @@ void backtracking(int depth, int cnt) {
         for(int i = 0; i < 2; i++) {
             int ret = visiting(i, cctv, depth + 1);
             ret += visiting(i + 2, cctv, depth + 1);
+
             backtracking(depth + 1, cnt + ret);
+
             unvisiting(i, cctv, depth + 1);
             unvisiting(i + 2, cctv, depth + 1);
         }
@@ -129,7 +168,9 @@ void backtracking(int depth, int cnt) {
         for(int i = 0; i < 4; i++) {
             int ret = visiting(i, cctv, depth + 1);
             ret += visiting((i + 1) % 4, cctv, depth + 1);
+
             backtracking(depth + 1, cnt + ret);
+
             unvisiting(i, cctv, depth + 1);
             unvisiting((i + 1) % 4, cctv, depth + 1);
         }
@@ -139,12 +180,13 @@ void backtracking(int depth, int cnt) {
             int ret = visiting(i, cctv, depth + 1);
             ret += visiting((i + 1) % 4, cctv, depth + 1);
             ret += visiting((i + 2) % 4, cctv, depth + 1);
+
             backtracking(depth + 1, cnt + ret);
+
             unvisiting(i, cctv, depth + 1);
             unvisiting((i + 1) % 4, cctv, depth + 1);
             unvisiting((i + 2) % 4, cctv, depth + 1);
         }
-
     }
     else if(type == 5) {
         int ret = visiting(0, cctv, depth + 1);
@@ -169,12 +211,10 @@ int main() {
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < m; j++) {
             cin >> board[i][j];
-            if(1 <= board[i][j] && board[i][j] <= 5) {
+            if(1 <= board[i][j] && board[i][j] <= 5) 
                 cctvs.push_back({i, j});
-            }
-            else if(board[i][j] == 0) {
+            else if(board[i][j] == 0) 
                 blind++;
-            }
         }
     }
 
