@@ -148,3 +148,12 @@ gc을 효율적으로 하기 위해서 heap 영역을 young와 old 영역으로 
 minor gc는 young 영역에서 수행하는 gc를 의미한다. 새로 생성한 객체는 처음에 eden 영역에 위치한다. eden 영역에서 gc가 발생했을 때 살아남은 객체는 survivor 영역으로 이동한다. 위의 과정을 반복하다가 하나의 survivor 영역이 가득 차면 다른 survivor 영역으로 객체를 이동시킨다. 이 과정을 반복하면서 계속 살아남은 객체는 old 영역으로 이동한다.
 
 major gc는 old영역에서 일어나는 gc이다. old 영역은 young 영역보다 더 큰 크기를 가지고 있기 때문에 gc를 수행시 더 오랜 시간이 걸려 stop-the-world 시간이 길어진다. 
+
+### 종류
+
+cms gc
+
+g1 gc
+
+z gc
+
