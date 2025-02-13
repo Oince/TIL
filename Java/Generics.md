@@ -96,7 +96,7 @@ class FruitBox<T extends Fruit & Eatable> {}
   - 배열은 공변적이다.
 
 - 반공변: S가 T의 하위 타입이면, T[]는 S[]의 하위 타입이다.
-- 불공변: List<S>와 List<T>는 관계가 없다. 
+- 불공변: `List<S>`와 `List<T>`는 관계가 없다. 
   - 제네릭은 불공변이다. `List<String>`과 `List<Object>`는 아예 다른 타입으로 서로 관계가 없다.
 
 
