@@ -21,7 +21,7 @@
 
 ## 구조
 
-
+![image-20250828202157190](images/image-20250828202157190.png)
 
 ## System call
 
