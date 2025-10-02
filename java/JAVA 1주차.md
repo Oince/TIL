@@ -1,6 +1,6 @@
-# JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가
+# JVM
 
-## JVM
+## JVM이란?
 
 JVM은 Java virtual machine의 약자로 java를 실행하기 위한 가상 기계이다. jvm은 바이트코드를 컴퓨터가 실행할 수 있는 기계어로 변환해서 실행하는 역할을 한다. java 프로그램을 실행하려면 반드시 jvm이 설치되어 있어야 한다.
 
@@ -148,12 +148,4 @@ gc을 효율적으로 하기 위해서 heap 영역을 young와 old 영역으로 
 minor gc는 young 영역에서 수행하는 gc를 의미한다. 새로 생성한 객체는 처음에 eden 영역에 위치한다. eden 영역에서 gc가 발생했을 때 살아남은 객체는 survivor 영역으로 이동한다. 위의 과정을 반복하다가 하나의 survivor 영역이 가득 차면 다른 survivor 영역으로 객체를 이동시킨다. 이 과정을 반복하면서 계속 살아남은 객체는 old 영역으로 이동한다.
 
 major gc는 old영역에서 일어나는 gc이다. old 영역은 young 영역보다 더 큰 크기를 가지고 있기 때문에 gc를 수행시 더 오랜 시간이 걸려 stop-the-world 시간이 길어진다. 
-
-### 종류
-
-cms gc
-
-g1 gc
-
-z gc
 
