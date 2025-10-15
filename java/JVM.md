@@ -90,19 +90,26 @@ java 프로그램이 실행될 때 사용되는 메모리 공간이며 총 5가�
 
 - heap
   - 모든 인스턴스와 배열의 메모리가 할당되는 공간이며, garbage collection에 의해 관리된다.
+  - 모든 스레드가 공유한다.
 - method
   - class loader에 의해 로드된 클래스에 대한 정보(필드, 메서드, 생성자, static 등)와 runtime constant pool을 저장하는 공간이다.
   - runtime constant pool
-    - 상수와 클래스, 필드, 메서드 등에 대한 참조를 가지고 있는 테이블이다. jvm은 이 테이블을 통해 실제 주소에 접근한다. .class 파일은 각자 constant pool을 가지는데, 클래스 로딩 과정에서 runtime constant poll에 적재된다. 
+    - 클래스, 필드, 메서드와 리터럴, 심벌 등에 대한 참조를 가지고 있는 테이블이다. jvm은 이 테이블을 통해 실제 주소에 접근한다. .class 파일은 각자 constant pool을 가지는데, 클래스 로딩 과정에서 runtime constant poll에 적재된다. 
 - stack
-  - frame이라는 형태로 저장하며, 지역 변수, 피연산자 스택, runtime constant pool에 대한 참조 등을 가지고 있다.
+  - 각 메서드가 호출될 때마다 프레임을 만든다.
+  - 프레임은 지역 변수, 피연산자 스택, 동적 링크, 메서드 반환값, runtime constant pool에 대한 참조 등을 가지고 있다.
+  - 프레임을 스택에 push하고 메서드가 끝나면 pop하는 일을 반복한다.
+  - 각 스레드들은 자신만의 스택을 가진다.
+    - 이를 thread private 메모리라고 한다.
+  - 스레드가 요청한 스택 깊이가 가상 머신이 허용하는 것보다 크다면 StackorverflowError를 던진다.
 - pc register
-  - 각 thread들은 자신만의 pc 레지스터를 갖는다. pc 레지스터는 현재 실행중인 명령어의 주소를 가리킨다. 
+  - pc 레지스터는 다음에 실행할 명령어의 주소를 가리킨다. 
+  - thread private이다.
   - 만약 현재 실행중인 메소드가 native 메소드일 경우엔 undefined 상태가 된다.
-
 - native method stack
   - c/c++로 구현된 native 메서드을 실행하기 위한 공간이다.
-  - native 메서드가 실행될 때는 jvm의 stack을 사용하는 것이 아니라 따로 구현된 native method stack을 사용한다.
+  - jvm 명세는 이것을 어떻게 구현하는지 명시하지 않았다.
+  - 핫스팟 jvm에서는 가상 머신 스택과 이 스택을 하나로 합쳐놓았다.
 
 
 ### execution engine
@@ -119,7 +126,7 @@ garbage collector는 다음 단락에 자세히 다룬다.
 
 garbage collection은 heap 영역의 메모리를 관리해주는 기술이다. 더 이상 사용하지 않거나 접근할 수 없는 인스턴스의 메모리를 회수한다.
 
-장점으로는 개발자가 메모리의 회수를 신경쓰지 않아도 gc가 알아서 회수해준다는 점이다. 따라서 메모리 누수의 걱정 없이 개발할 수 있다. 단점으로는 gc가 작동할 때 실행하고 있는 어플리케이션이 멈추는 stop-the-world가 발생한다는 것이다. gc가 동작하기 위해서는 실행중인 어플리케이션의 모든 thread가 멈춰야 하기 때문이다. 이는 성능의 저하을 의미한다.
+장점으로는 개발자가 메모리의 회수를 신경쓰지 않아도 gc가 알아서 회수해준다는 점이다. 따라서 메모리 누수의 걱정 없이 개발할 수 있다. 단점으로는 gc가 작동할 때 실행하고 있는 어플리케이션이 멈추는 stop-the-world가 발생한다는 것이다. gc가 동작하기 위해서는 실행중인 어플리케이션의 모든 스레드가 멈춰야 하기 때문이다. 이는 성능의 저하을 의미한다.
 
 ### 동작 방식
 
